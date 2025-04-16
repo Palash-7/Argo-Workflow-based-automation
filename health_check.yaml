@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: health-check
+spec:
+  entrypoint: health-task
+  templates:
+  - name: health-task
+    script:
+      image: python:3.10
+      command: [python]
+      source: |
+        import rack_resiliency_test
+        rack_resiliency_test.full_health_check()
+
