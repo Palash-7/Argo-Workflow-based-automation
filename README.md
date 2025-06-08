@@ -222,8 +222,3 @@ kubectl rollout restart deployments
 # Check distribution
 kubectl get pods -o wide
 ```
-
-## Contributors
-
-- [Kushcodingexe](https://github.com/Kushcodingexe) (Kush Sahni)
-- [Palash-7](https://github.com/Palash-7) 
