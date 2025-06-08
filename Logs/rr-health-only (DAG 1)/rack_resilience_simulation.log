@@ -1,0 +1,120 @@
+2025-06-08 00:26:23,597 INFO: Loaded in-cluster Kubernetes config
+2025-06-08 00:26:23,598 INFO: Running on host: rr-health-only-invoke-python-2289921045
+2025-06-08 00:26:23,598 INFO: Detected current node: master-m003, zone: R3
+2025-06-08 00:26:23,598 INFO: Checking if we have permissions to modify nodes...
+2025-06-08 00:26:23,616 INFO: Testing permissions using node: master-m001
+2025-06-08 00:26:23,621 INFO: Permission check successful - we can modify nodes
+2025-06-08 00:26:23,621 INFO: Using real Kubernetes API for node control
+2025-06-08 00:26:23,622 INFO: Action received: health-check
+2025-06-08 00:26:23,622 INFO: Stabilization time: 60 seconds
+2025-06-08 00:26:23,622 INFO: Starting full health check
+2025-06-08 00:26:23,622 INFO: 
+============ DETAILED NODE STATUS ============
+2025-06-08 00:26:23,622 INFO: Basic Node Information (kubectl get nodes -o wide):
+2025-06-08 00:26:23,672 INFO:   NAME          STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+2025-06-08 00:26:23,672 INFO:   master-m001   Ready    control-plane   53d   v1.32.3   10.0.2.15     <none>        Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.24
+2025-06-08 00:26:23,672 INFO:   master-m002   Ready    control-plane   53d   v1.32.3   10.0.2.15     <none>        Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.24
+2025-06-08 00:26:23,672 INFO:   master-m003   Ready    control-plane   53d   v1.32.3   10.0.2.15     <none>        Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.24
+2025-06-08 00:26:23,672 INFO:   worker-w001   Ready    <none>          53d   v1.32.3   10.0.2.15     <none>        Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.24
+2025-06-08 00:26:23,672 INFO:   worker-w002   Ready    <none>          53d   v1.32.3   10.0.2.15     <none>        Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.24
+2025-06-08 00:26:23,672 INFO:   worker-w003   Ready    <none>          53d   v1.32.3   10.0.2.15     <none>        Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.24
+2025-06-08 00:26:23,672 INFO:   worker-w004   Ready    <none>          53d   v1.32.3   10.0.2.15     <none>        Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.24
+2025-06-08 00:26:23,672 INFO:   worker-w005   Ready    <none>          53d   v1.32.3   10.0.2.15     <none>        Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.24
+2025-06-08 00:26:23,672 INFO:   worker-w006   Ready    <none>          53d   v1.32.3   10.0.2.15     <none>        Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.24
+2025-06-08 00:26:23,672 INFO: 
+Enhanced Node Status (with taint and cordon indicators):
+2025-06-08 00:26:23,673 INFO:   NAME                STATUS    ROLES           ZONE   CORDONED   TAINTS
+2025-06-08 00:26:23,818 INFO:   master-m001     Ready  ✓ worker         R1    No       node-role.kubernetes.io/control-plane 
+2025-06-08 00:26:23,917 INFO:   master-m002     Ready  ✓ worker         R2    No       None 
+2025-06-08 00:26:24,029 INFO:   master-m003     Ready  ✓ worker         R3    No       None 
+2025-06-08 00:26:24,133 INFO:   worker-w001     Ready  ✓ worker         R1    No       None 
+2025-06-08 00:26:24,242 INFO:   worker-w002     Ready  ✓ worker         R1    No       None 
+2025-06-08 00:26:24,379 INFO:   worker-w003     Ready  ✓ worker         R2    No       None 
+2025-06-08 00:26:24,480 INFO:   worker-w004     Ready  ✓ worker         R2    No       None 
+2025-06-08 00:26:24,588 INFO:   worker-w005     Ready  ✓ worker         R3    No       None 
+2025-06-08 00:26:24,784 INFO:   worker-w006     Ready  ✓ worker         R3    No       None 
+2025-06-08 00:26:24,784 INFO: 
+Legend:
+2025-06-08 00:26:24,784 INFO:   ✓ = Node is Ready
+2025-06-08 00:26:24,784 INFO:   ⚠️ = Warning indicator (NotReady, Cordoned, or has simulated-failure taint)
+2025-06-08 00:26:24,784 INFO: ============ DETAILED POD INFORMATION ============
+2025-06-08 00:26:24,784 INFO: Running 'kubectl get pods -o wide' to show detailed pod placement:
+2025-06-08 00:26:24,842 INFO:   NAMESPACE              NAME                                         READY   STATUS    RESTARTS         AGE     IP                NODE          NOMINATED NODE   READINESS GATES
+2025-06-08 00:26:24,842 INFO:   argo                   argo-server-569dfb49c-xfvtd                  1/1     Running   0                13m     192.168.15.224    worker-w005   <none>           <none>
+2025-06-08 00:26:24,842 INFO:   argo                   rr-health-only-invoke-python-2289921045      2/2     Running   0                4s      192.168.221.67    master-m003   <none>           <none>
+2025-06-08 00:26:24,842 INFO:   argo                   workflow-controller-6fc64ddffb-7bkkp         1/1     Running   0                11m     192.168.15.228    worker-w005   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-1-bcc4fc6cb-6bcc5                     1/1     Running   0                5m9s    192.168.221.102   master-m003   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-1-bcc4fc6cb-722k9                     1/1     Running   0                5m12s   192.168.240.167   worker-w003   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-1-bcc4fc6cb-sldvj                     1/1     Running   0                5m16s   192.168.195.194   worker-w002   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-2-7f8bb4d8cf-8vxln                    1/1     Running   0                5m12s   192.168.195.197   worker-w002   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-2-7f8bb4d8cf-b4kxj                    1/1     Running   0                5m16s   192.168.153.245   worker-w004   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-2-7f8bb4d8cf-r5mbp                    1/1     Running   0                5m8s    192.168.15.231    worker-w005   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-3-68c96d5b6c-7lch8                    1/1     Running   0                5m14s   192.168.132.155   worker-w001   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-3-68c96d5b6c-jbtb8                    1/1     Running   0                5m11s   192.168.221.101   master-m003   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-3-68c96d5b6c-jg4j2                    1/1     Running   0                5m16s   192.168.227.214   master-m002   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-4-5c6b8c4cb5-88cxn                    1/1     Running   0                78s     192.168.227.216   master-m002   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-4-5c6b8c4cb5-rlnn7                    1/1     Running   0                81s     192.168.195.199   worker-w002   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-4-5c6b8c4cb5-zm7rl                    1/1     Running   0                75s     192.168.191.97    worker-w006   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-5-75789c684b-6psqq                    1/1     Running   0                3m41s   192.168.221.69    master-m003   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-5-75789c684b-dncpz                    1/1     Running   0                3m44s   192.168.240.168   worker-w003   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                my-app-5-75789c684b-qtmvb                    1/1     Running   0                3m48s   192.168.132.156   worker-w001   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                nginx-deployment-5dff77b95b-8k8mf            1/1     Running   0                13m     192.168.15.226    worker-w005   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                nginx-deployment-5dff77b95b-flcxv            1/1     Running   0                11m     192.168.221.96    master-m003   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   default                nginx-deployment-5dff77b95b-jhwdh            1/1     Running   0                37h     192.168.191.87    worker-w006   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   kube-system            calico-kube-controllers-7498b9bb4c-9xppb     1/1     Running   11 (2d11h ago)   44d     192.168.191.78    worker-w006   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   kube-system            calico-node-4jlh6                            1/1     Running   9 (2d11h ago)    53d     10.0.2.15         worker-w004   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   kube-system            calico-node-4psss                            1/1     Running   8 (2d14h ago)    53d     10.0.2.15         master-m002   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   kube-system            calico-node-622nk                            1/1     Running   10 (2d14h ago)   53d     10.0.2.15         worker-w003   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   kube-system            calico-node-b58kn                            1/1     Running   7 (2d11h ago)    53d     10.0.2.15         worker-w006   <none>           <none>
+2025-06-08 00:26:24,843 INFO:   kube-system            calico-node-f7brb                            1/1     Running   9 (2d11h ago)    53d     10.0.2.15         worker-w005   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            calico-node-jplhd                            1/1     Running   7 (2d11h ago)    53d     10.0.2.15         master-m003   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            calico-node-rn6hn                            1/1     Running   11 (2d12h ago)   53d     10.0.2.15         master-m001   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            calico-node-rsrll                            1/1     Running   11 (2d1h ago)    53d     10.0.2.15         worker-w002   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            calico-node-s2t8g                            1/1     Running   10 (2d12h ago)   53d     10.0.2.15         worker-w001   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            coredns-668d6bf9bc-f8rpr                     1/1     Running   6 (2d11h ago)    44d     192.168.15.210    worker-w005   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            coredns-668d6bf9bc-h498n                     1/1     Running   0                11m     192.168.221.97    master-m003   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            etcd-master-m001                             1/1     Running   11 (2d12h ago)   53d     10.0.2.15         master-m001   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-apiserver-master-m001                   1/1     Running   11 (2d12h ago)   53d     10.0.2.15         master-m001   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-controller-manager-master-m001          1/1     Running   11 (2d12h ago)   53d     10.0.2.15         master-m001   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-proxy-8n8f7                             1/1     Running   9 (2d14h ago)    53d     10.0.2.15         master-m002   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-proxy-bqjsz                             1/1     Running   7 (2d11h ago)    53d     10.0.2.15         master-m003   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-proxy-dtt5g                             1/1     Running   11 (2d12h ago)   53d     10.0.2.15         master-m001   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-proxy-ktdj4                             1/1     Running   10 (2d12h ago)   53d     10.0.2.15         worker-w001   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-proxy-lkjh9                             1/1     Running   7 (2d11h ago)    53d     10.0.2.15         worker-w006   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-proxy-nw94z                             1/1     Running   10 (2d14h ago)   53d     10.0.2.15         worker-w003   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-proxy-v7l2m                             1/1     Running   9 (2d11h ago)    53d     10.0.2.15         worker-w004   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-proxy-vtg7n                             1/1     Running   9 (2d11h ago)    53d     10.0.2.15         worker-w005   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-proxy-xrkbs                             1/1     Running   11 (2d1h ago)    53d     10.0.2.15         worker-w002   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kube-system            kube-scheduler-master-m001                   1/1     Running   11 (2d12h ago)   53d     10.0.2.15         master-m001   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kubernetes-dashboard   dashboard-metrics-scraper-5bd45c9dd6-k2zgh   1/1     Running   0                11m     192.168.191.94    worker-w006   <none>           <none>
+2025-06-08 00:26:24,844 INFO:   kubernetes-dashboard   kubernetes-dashboard-79cbcf9fb6-xcsdx        1/1     Running   0                11m     192.168.191.93    worker-w006   <none>           <none>
+2025-06-08 00:26:24,844 INFO: 
+Pod distribution by node:
+2025-06-08 00:26:24,895 INFO:   Node worker-w005: 4 pods
+2025-06-08 00:26:24,896 INFO:   Node master-m003: 6 pods
+2025-06-08 00:26:24,896 INFO:   Node worker-w003: 2 pods
+2025-06-08 00:26:24,896 INFO:   Node worker-w002: 3 pods
+2025-06-08 00:26:24,896 INFO:   Node worker-w004: 1 pods
+2025-06-08 00:26:24,896 INFO:   Node worker-w001: 2 pods
+2025-06-08 00:26:24,896 INFO:   Node master-m002: 2 pods
+2025-06-08 00:26:24,896 INFO:   Node worker-w006: 4 pods
+2025-06-08 00:26:24,896 INFO:   Node 44d: 2 pods
+2025-06-08 00:26:24,896 INFO:   Node 53d: 22 pods
+2025-06-08 00:26:24,896 INFO: 
+Filtering for simulation services:
+2025-06-08 00:26:24,955 INFO: Node master-m001 is Ready
+2025-06-08 00:26:24,956 INFO: Node master-m002 is Ready
+2025-06-08 00:26:24,956 INFO: Node master-m003 is Ready
+2025-06-08 00:26:24,956 INFO: Node worker-w001 is Ready
+2025-06-08 00:26:24,956 INFO: Node worker-w002 is Ready
+2025-06-08 00:26:24,956 INFO: Node worker-w003 is Ready
+2025-06-08 00:26:24,956 INFO: Node worker-w004 is Ready
+2025-06-08 00:26:24,956 INFO: Node worker-w005 is Ready
+2025-06-08 00:26:24,956 INFO: Node worker-w006 is Ready
+2025-06-08 00:26:24,970 INFO: Service etcd-sim zone distribution: {'R3': 1, 'R2': 1, 'R1': 1}
+2025-06-08 00:26:24,983 INFO: Service postgres-sim zone distribution: {'R1': 1, 'R2': 1, 'R3': 1}
+2025-06-08 00:26:24,997 INFO: Service redis-sim zone distribution: {'R1': 1, 'R3': 1, 'R2': 1}
+2025-06-08 00:26:25,010 INFO: Service nginx-sim zone distribution: {'R2': 1, 'R1': 1, 'R3': 1}
+2025-06-08 00:26:25,024 INFO: Service auth-sim zone distribution: {'R3': 1, 'R2': 1, 'R1': 1}
+2025-06-08 00:26:25,024 INFO: Completed full health check
+
