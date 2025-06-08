@@ -45,7 +45,7 @@ The system works by:
 
 ## Prerequisites
 
-- Kubernetes cluster (v1.19+)
+- Vagrant installed in your system working directory
 - kubectl configured for your cluster
 - Docker for building the simulation container
 - Argo Workflows installed in your cluster
@@ -60,7 +60,7 @@ For detailed cluster setup instructions, please refer to the [k8s_cluster](https
 Label your nodes with zones to simulate racks:
 ```bash
 # Example: Label nodes with zones
-kubectl label node <node-name> topology.kubernetes.io/zone=R1
+python3 label-nodes-by-zones.py
 ```
 
 ### Installing Argo Workflows
@@ -125,20 +125,11 @@ kubectl port-forward svc/argo-server -n argo 2746:2746
 # Access in browser
 # http://localhost:2746
 ```
-
 ### Logs
+Will be stored inside master-m003 node inside the directory argo-logs within subfolders for each DAG template logs under the name rack_resilience_simulation.log 
 
-View the logs from the chaos tests:
 
-```bash
-# Check logs from a specific workflow
-argo logs -n argo <workflow-name>
-
-# Access logs from the container directly
-kubectl logs -n argo -l workflows.argoproj.io/workflow=<workflow-name>
-```
-
-Log files are also stored in the [Logs](https://github.com/Palash-7/Argo-Workflow-based-automation/tree/main/Logs) directory of the repository.
+Some sample Log files that were generated are stored in the [Logs](https://github.com/Palash-7/Argo-Workflow-based-automation/tree/main/Logs) directory of the repository.
 
 ## Detailed Node and Pod Information
 
