@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-2
+  labels:
+    app: postgres-sim
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: postgres-sim
+  template:
+    metadata:
+      labels:
+        app: postgres-sim
+    spec:
+      containers:
+      - name: postgres-sim
+        image: alpine
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo postgres service running; sleep 10; done"]
