@@ -1,4 +1,4 @@
-# Kubernetes Chaos Testing Framework with Argo Workflows
+# Kubernetes Rack Resiliency Testing Framework with Argo Workflows
 
 ![Python](https://img.shields.io/badge/Python-85.7%25-blue)
 ![Shell](https://img.shields.io/badge/Shell-11.1%25-green)
@@ -54,7 +54,7 @@ The system works by:
 ## Installation
 
 ### Setting Up the Cluster
-
+Install Vagrant in your working directory
 For detailed cluster setup instructions, please refer to the [k8s_cluster](https://github.com/Palash-7/Argo-Workflow-based-automation/tree/main/k8s_cluster) directory in the repository.
 
 Label your nodes with zones to simulate racks:
@@ -81,9 +81,10 @@ chmod +x argo-linux-amd64
 sudo mv argo-linux-amd64 /usr/local/bin/argo
 ```
 
-## Running Chaos Tests
+## Running RR Tests
 
 Check the [Automation_Scripts](https://github.com/Palash-7/Argo-Workflow-based-automation/tree/main/Automation_Scripts) directory for the available test workflows and scripts.
+```
 
 ### Node Failure Simulation
 
