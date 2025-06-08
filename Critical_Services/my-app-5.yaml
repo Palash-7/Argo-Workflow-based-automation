@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-5
+  labels:
+    app: auth-sim
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: auth-sim
+  template:
+    metadata:
+      labels:
+        app: auth-sim
+    spec:
+      containers:
+      - name: auth-sim
+        image: alpine
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo auth service running; sleep 10; done"]
