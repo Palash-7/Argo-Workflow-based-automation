@@ -1,0 +1,3 @@
+R1: master-m001,worker-w001,worker-w002
+R2: master-m002,worker-w003,worker-w004
+R3: master-m003,worker-w005,worker-w006
