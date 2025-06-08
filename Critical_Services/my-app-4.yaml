@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-4
+  labels:
+    app: nginx-sim
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-sim
+  template:
+    metadata:
+      labels:
+        app: nginx-sim
+    spec:
+      containers:
+      - name: nginx-sim
+        image: alpine
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo nginx service running; sleep 10; done"]
