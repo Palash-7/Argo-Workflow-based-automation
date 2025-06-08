@@ -1,0 +1,21 @@
+# argo-custom-binding.yaml
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argo-workflow
+  namespace: argo
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argo-custom-rolebinding
+subjects:
+  - kind: ServiceAccount
+    name: argo-workflow
+    namespace: argo
+roleRef:
+  kind: ClusterRole
+  name: argo-custom-role     # must match the ClusterRole we created above
+  apiGroup: rbac.authorization.k8s.io
+

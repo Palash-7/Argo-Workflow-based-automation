@@ -1,0 +1,45 @@
+# argo-custom-role.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argo-custom-role
+rules:
+  # 1) Allow Argo Workflows CRD operations (list/get/create/update/delete)
+  #- apiGroups: ["argoproj.io"]
+  #  resources: ["workflows", "workflowtaskresults", "workflowevent", "workflowmetrics"]
+  #  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  #  
+  # (Instead of wildcarding, we can be explicit; adjust if your Argo CRD group/version differs.)
+  
+  # a) Workflows
+  - apiGroups: ["argoproj.io"]
+    resources: ["workflows"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  # b) WorkflowTaskResults
+  - apiGroups: ["argoproj.io"]
+    resources: ["workflowtaskresults"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  # c) (Optional) Workflows/status & Workflows/finalizers if needed
+  - apiGroups: ["argoproj.io"]
+    resources: ["workflows/status"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+  # d) Allow reading ClusterWorkflowTemplates or WorkflowTemplates if your workflows use them
+  - apiGroups: ["argoproj.io"]
+    resources: ["clusterworkflowtemplates", "workflowtemplates"]
+    verbs: ["get", "list", "watch"]
+
+  # 2) Allow reading nodes (so your script can read zone labels)
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+
+  # 3) Allow evicting pods (drain_node uses eviction subresource)
+  - apiGroups: ["policy"]
+    resources: ["pods/eviction"]
+    verbs: ["create"]
+
+  # 4) (Optional) If your workflows create or manage any ConfigMaps/Secrets/etc,
+  #    you can add those permissions here. For now, we only need node-read + eviction.
+
+
