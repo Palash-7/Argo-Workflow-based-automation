@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-3
+  labels:
+    app: redis-sim
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis-sim
+  template:
+    metadata:
+      labels:
+        app: redis-sim
+    spec:
+      containers:
+      - name: redis-sim
+        image: alpine
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo redis service running; sleep 10; done"]
