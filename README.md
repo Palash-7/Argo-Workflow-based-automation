@@ -124,9 +124,10 @@ Access the Argo UI to monitor workflow progress:
 kubectl port-forward svc/argo-server -n argo 2746:2746
 
 # Access in browser
-# http://localhost:2746
+# https://localhost:2746
 ```
 ### Logs
+Visible in Argo UI  -> under Argo namespace -> go to workfow -> LOGS tab
 Will be stored inside master-m003 node inside the directory argo-logs within subfolders for each DAG template logs under the name rack_resilience_simulation.log 
 
 
