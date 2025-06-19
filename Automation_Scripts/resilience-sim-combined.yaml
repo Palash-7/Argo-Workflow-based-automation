@@ -1,0 +1,208 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: resilience-sim-final
+  namespace: argo
+  annotations:
+    workflows.argoproj.io/description: "Combined resilience simulation with preserved logs"
+spec:
+  serviceAccountName: argo-workflow
+  
+  # Keep workflow visible for a long time
+  ttlStrategy:
+    secondsAfterCompletion: 31536000  # 365 days
+
+  # Keep pods around longer
+  activeDeadlineSeconds: 31536000  # 365 days
+  
+  entrypoint: resilience-dag
+  
+  templates:
+  - name: resilience-dag
+    dag:
+      tasks:
+      # Parallel health checks to start
+      - name: health-check-1
+        template: invoke-health-check
+      
+      - name: health-check-2
+        template: invoke-health-check
+      
+      - name: health-check-3
+        template: invoke-health-check
+      
+      # Node simulation after health checks
+      - name: node-simulation
+        dependencies: [health-check-1, health-check-2, health-check-3]
+        template: invoke-node-sim
+
+      # Intermediate health check
+      - name: interim-health-check
+        dependencies: [node-simulation]
+        template: invoke-health-check
+        
+      # Rack simulation after node sim
+      - name: rack-simulation
+        dependencies: [interim-health-check]
+        template: invoke-rack-sim
+      
+      # Final health check
+      - name: final-health-check
+        dependencies: [rack-simulation]
+        template: invoke-health-check
+  
+  # Template for health checks
+  - name: invoke-health-check
+    container:
+      image: kushsahni1/chaos-sim:latest
+      imagePullPolicy: Always
+      
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        allowPrivilegeEscalation: true
+      
+      command:
+      - /bin/sh
+      - -c
+      - |
+        echo "===== STARTING HEALTH CHECK ====="
+        # Set unbuffered output
+        export PYTHONUNBUFFERED=1
+        # Run the health check
+        python3 /app/rack_resiliency_to_host.py health-check
+        # Keep logs available by sleeping briefly
+        echo "===== HEALTH CHECK COMPLETED ====="
+        sleep 10
+      
+      env:
+      - name: KUBECONFIG
+        value: /home/argo/.kube/config
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName
+      - name: PYTHONUNBUFFERED
+        value: "1"
+      
+      volumeMounts:
+      - name: log-vol
+        mountPath: /app/logs
+    
+    nodeSelector:
+      kubernetes.io/hostname: master-m003
+      
+    tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule
+  
+  # Template for node simulation
+  - name: invoke-node-sim
+    container:
+      image: kushsahni1/chaos-sim:latest
+      imagePullPolicy: Always
+      
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        allowPrivilegeEscalation: true
+      
+      command:
+      - /bin/sh
+      - -c
+      - |
+        echo "===== STARTING NODE SIMULATION ====="
+        # Set unbuffered output
+        export PYTHONUNBUFFERED=1
+        # Run the node simulation
+        python3 /app/rack_resiliency_to_host.py simulate-node --stabilization-time 60
+        # Keep logs available by sleeping briefly
+        echo "===== NODE SIMULATION COMPLETED ====="
+        sleep 10
+      
+      env:
+      - name: KUBECONFIG
+        value: /home/argo/.kube/config
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName
+      - name: PYTHONUNBUFFERED
+        value: "1"
+      
+      volumeMounts:
+      - name: log-vol
+        mountPath: /app/logs
+    
+    nodeSelector:
+      kubernetes.io/hostname: master-m003
+      
+    tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule
+  
+  # Template for rack simulation
+  - name: invoke-rack-sim
+    container:
+      image: kushsahni1/chaos-sim:latest
+      imagePullPolicy: Always
+      
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        allowPrivilegeEscalation: true
+      
+      command:
+      - /bin/sh
+      - -c
+      - |
+        echo "===== STARTING RACK SIMULATION ====="
+        # Set unbuffered output
+        export PYTHONUNBUFFERED=1
+        # Run the rack simulation
+        python3 /app/rack_resiliency_to_host.py simulate-rack --stabilization-time 120 --downtime 60
+        # Keep logs available by sleeping briefly
+        echo "===== RACK SIMULATION COMPLETED ====="
+        sleep 10
+      
+      env:
+      - name: KUBECONFIG
+        value: /home/argo/.kube/config
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName
+      - name: PYTHONUNBUFFERED
+        value: "1"
+      
+      volumeMounts:
+      - name: log-vol
+        mountPath: /app/logs
+    
+    nodeSelector:
+      kubernetes.io/hostname: master-m003
+      
+    tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule
+  
+  volumes:
+  - name: log-vol
+    hostPath:
+      path: /home/vagrant/argo-logs/resilience-sim-combined
+      type: DirectoryOrCreate
